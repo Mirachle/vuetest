@@ -1,14 +1,15 @@
 <template>
   <div>
-    <p :class="labelClass">{{text}}</p>
+    <p :class="labelClass">
+      {{text}}</p>
     <div class="input-eye">
-      <input v-model="password" @blur="blured" @focus="inputClicked" :type="type" :placeholder="placeholder" :class="[inputClass, isEmailValid]">
+      <input @keyup="$emit('changed', password)" v-model="password" @blur="blured" @focus="inputClicked" :type="type" :placeholder="placeholder" :class="[inputClass, isEmailValid, 'input']">
       <img @click="eyeClicked()" v-if="type == 'password' || type == 'text'" :src="eyeImage.img" alt="eye">
       <div class="strength-meter" v-if="type == 'password' || type == 'text'">
         <span :class="[strength > 3 ? 'strength-4' : '']"></span>
         <span :class="[strength > 2 ? 'strength-3' : '']"></span>
         <span :class="[strength > 1 ? 'strength-2' : '']"></span>
-        <span class="strength-1" style="top:18px"></span>
+        <span class="strength-1"></span>
       </div>
     </div>
   </div>
@@ -21,7 +22,7 @@ export default {
   data() {
     return {
       labelClass: "passive-color",
-      inputClass: "input",
+      inputClass: "passive-input",
       eyeImage: { img: require("@/assets/fa-eye-slash.png") },
       eyeSlashImage: { img: require("@/assets/fa-eye-slash.png") },
       eyeFaImage: { img: require("@/assets/fa-eye.png") },
@@ -66,8 +67,9 @@ export default {
 
     blured() {
       this.labelClass = "passive-color";
-      this.inputClass = "input";
-    }
+      this.inputClass = "passive-input";
+    },
+
   }
 };
 </script>
@@ -111,29 +113,21 @@ img {
   border: 0px;
   margin-bottom: 2vw;
   box-shadow: 0 2px 0 0 #e5e5e5;
-  background: transparent;
+}
+
+.passive-input {
+  box-shadow: 0 2px 0 0 #e5e5e5;
 }
 
 .active-input {
-  position: relative;
-  width: 100%;
-  border: 0px;
-  margin-bottom: 2vw;
   box-shadow: 0 2px 0 0 #4a90e2;
 }
 
 .success-input {
-  position: relative;
-  width: 100%;
-  border: 0px;
-  margin-bottom: 2vw;
   box-shadow: 0 2px 0 0 green;
 
 
-}.warning-input {  position: relative;
-  width: 100%;
-  border: 0px;
-  margin-bottom: 2vw;
+}.warning-input {
   box-shadow: 0 2px 0 0 red;
 }
 

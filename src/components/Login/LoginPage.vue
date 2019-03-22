@@ -2,10 +2,10 @@
 <div>
  <div class="card">
     <login-header/>
-    <login-input :text="email" :type="emailType" :placeholder="emailPlaceholder"/>
-    <login-input :text="password" :type="passwordType" :placeholder="passwordPlaceholder"/>
+    <login-input :text="email" :type="emailType" :placeholder="emailPlaceholder" @changed="emailChange"/>
+    <login-input :text="password" :type="passwordType" :placeholder="passwordPlaceholder" @changed="passwordChange"/>
     <login-checkbox/>
-    <login-button/>
+    <login-button @clicked="onClickChild"/>
   </div>
     <login-text/>
 </div>
@@ -17,6 +17,7 @@ import LoginInput from '@/components/Login/LoginInput';
 import LoginCheckbox from '@/components/Login/LoginCheckbox';
 import LoginButton from '@/components/Login/LoginButton';
 import LoginText from '@/components/Login/LoginText';
+import axios from 'axios'
 
 export default {
   name: 'LoginPage',
@@ -28,6 +29,8 @@ export default {
       password: "Password",
       passwordType: "password",
       passwordPlaceholder:"42plodoc|",
+      emailValue: "",
+      passwordValue: "",
     };
   },
 
@@ -38,6 +41,31 @@ components: {
     "login-button": LoginButton,
     "login-text": LoginText,
     },
+
+
+  methods: {
+    onClickChild (value) {
+      this.postNow();
+    },
+
+    emailChange (value) {
+      this.emailValue = this.value;
+    },
+
+    passwordChange (value) {
+      this.passwordValue = this.value;
+    },
+
+    postNow(){
+      axios.post('https://us-central1-ria-server-b1103.cloudfunctions.net/authenticate',
+      {data:{
+        password: this.passwordValue,
+        email: this.emailValue,
+      }}).then(alert('mira'));
+    }
+
+  }
+
 };
 </script>
 

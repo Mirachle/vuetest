@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn login-btn" style="float: right;">{{text}}</button>
+    <button class="btn login-btn" style="float: right;" @click="$emit('clicked')">{{text}}</button>
   </div>
 </template>
 
