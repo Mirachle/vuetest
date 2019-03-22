@@ -29,8 +29,6 @@ export default {
       password: "Password",
       passwordType: "password",
       passwordPlaceholder:"42plodoc|",
-      emailValue: "",
-      passwordValue: "",
     };
   },
 
@@ -44,16 +42,16 @@ components: {
 
 
   methods: {
-    onClickChild (value) {
+    onClickChild() {
       this.postNow();
     },
 
-    emailChange (value) {
-      this.emailValue = this.value;
+    emailChange(value) {
+      this.emailValue = value;
     },
 
-    passwordChange (value) {
-      this.passwordValue = this.value;
+    passwordChange(value) {
+      this.passwordValue = value;
     },
 
     postNow(){
@@ -61,7 +59,14 @@ components: {
       {data:{
         password: this.passwordValue,
         email: this.emailValue,
-      }}).then(alert('mira'));
+      }}).then((r) =>{
+
+        if(r.data.result){
+          alert(JSON.stringify(r.data.result))
+        }else{
+           alert(r.data.result.error)
+        }
+      });
     }
 
   }
