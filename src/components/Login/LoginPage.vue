@@ -18,6 +18,7 @@ import LoginCheckbox from '@/components/Login/LoginCheckbox';
 import LoginButton from '@/components/Login/LoginButton';
 import LoginText from '@/components/Login/LoginText';
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'LoginPage',
@@ -60,14 +61,49 @@ components: {
         password: this.passwordValue,
         email: this.emailValue,
       }}).then((r) =>{
-
+        let timerInterval
         if(r.data.result){
-          alert(JSON.stringify(r.data.result))
+          if(r.data.result["id"] == undefined){
+            Swal.fire({
+              title: 'Oops...',
+              text: 'Something went wrong! Try again!',
+              type: 'error',
+              heightAuto: false,
+              showConfirmButton: false,
+              timer: 3000,
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            })
+          }
+          else{
+            Swal.fire({
+              title: 'Your data:',
+              html: "Id: " + JSON.stringify(r.data.result["id"]) +
+                  ("<br/>Email: " + JSON.stringify(r.data.result["email"])  +
+                    "<br/>Name: " + JSON.stringify(r.data.result["name"]) +
+                    "<br/>Address: " + JSON.stringify(r.data.result["address"])).replace(/"/g, ''),
+              type: 'success',
+              heightAuto: false,
+              showConfirmButton: false,
+              timer: 3000,
+              onClose: () => {
+                clearInterval(timerInterval)
+              }
+            },
+            /*function(isConfirm) {
+              if (isConfirm) {
+            //this.router.navigate('profile/');
+            alert('yes!');}
+            }*/)
+          }
         }else{
            alert(r.data.result.error)
         }
       });
     }
+
+
 
   }
 
@@ -84,4 +120,5 @@ components: {
     box-shadow:0px 0px 6px #e0e0e0;
     border: 0px;
     }
+
 </style>

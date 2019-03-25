@@ -115,6 +115,7 @@ img {
   border: 0px;
   margin-bottom: 2vw;
   box-shadow: 0 2px 0 0 #e5e5e5;
+  outline: 0px;
 }
 
 .passive-input {
