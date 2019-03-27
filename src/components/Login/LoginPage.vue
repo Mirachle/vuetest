@@ -85,17 +85,13 @@ components: {
                     "<br/>Address: " + JSON.stringify(r.data.result["address"])).replace(/"/g, ''),
               type: 'success',
               heightAuto: false,
-              showConfirmButton: false,
-              timer: 3000,
-              onClose: () => {
-                clearInterval(timerInterval)
+              confirmButtonText: "Tovább",
+            }).then((result) => {
+              if (result.value) {
+                //this.router.navigate('profile/');
+                alert('yes!');
               }
-            },
-            /*function(isConfirm) {
-              if (isConfirm) {
-            //this.router.navigate('profile/');
-            alert('yes!');}
-            }*/)
+            })
           }
         }else{
            alert(r.data.result.error)
