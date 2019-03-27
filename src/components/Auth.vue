@@ -15,13 +15,9 @@
 <script>
 import LoginPage from '@/components/Login/LoginPage';
 import SignUpPage from '@/components/SignUp/SignUpPage';
+
 export default {
   name: 'Auth',
-  data() {
-    return {
-
-    };
-  },
   components: {
     "login": LoginPage,
     "signup": SignUpPage,

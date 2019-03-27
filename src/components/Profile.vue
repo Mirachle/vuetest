@@ -1,0 +1,17 @@
+<template>
+    <div id="profile">
+      <h1>Profile</h1>
+    <router-view/>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Profile',
+};
+</script>
+
+<style>
+
+
+</style>

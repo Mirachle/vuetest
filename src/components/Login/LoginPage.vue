@@ -88,10 +88,9 @@ components: {
               confirmButtonText: "Tovább",
             }).then((result) => {
               if (result.value) {
-                //this.router.navigate('profile/');
-                alert('yes!');
-              }
-            })
+                this.$router.push('/profile');
+            }})
+
           }
         }else{
            alert(r.data.result.error)
