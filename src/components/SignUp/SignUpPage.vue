@@ -38,7 +38,6 @@ components: {
     padding: 5%;
     margin: 15%;
     margin-bottom: 0%;
-    background-color: transparent;
     text-align: left;
 }
 

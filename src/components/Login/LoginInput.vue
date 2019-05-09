@@ -1,23 +1,10 @@
 <template>
   <div>
-    <p :class="labelClass">{{text}}</p>
+    <p :class="labelClass">
+      {{text}}</p>
     <div class="input-eye">
-      <input
-        @keyup="$emit('changed', password)"
-        @click="$emit('changed', password)"
-        v-model="password"
-        @blur="blured"
-        @focus="inputClicked"
-        :type="type"
-        :placeholder="placeholder"
-        :class="[inputClass, isEmailValid, 'input']"
-      >
-      <img
-        @click="eyeClicked()"
-        v-if="type == 'password' || type == 'text'"
-        :src="eyeImage.img"
-        alt="eye"
-      >
+      <input v-model="password" @blur="blured" @focus="inputClicked" :type="type" :placeholder="placeholder" :class="[inputClass, submitData, 'input']" @keyup="inputKey" >
+      <img @click="eyeClicked()" v-if="type == 'password' || type == 'text'" :src="eyeImage.img" alt="eye">
       <div class="strength-meter" v-if="type == 'password' || type == 'text'">
         <span :class="[strength > 3 ? 'strength-4' : '']"></span>
         <span :class="[strength > 2 ? 'strength-3' : '']"></span>
@@ -43,21 +30,14 @@ export default {
       eyeFaImage: { img: require("@/assets/fa-eye.png") },
       password: "",
       email: "",
-      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
-    };
+      reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/    };
   },
 
   computed: {
     strength() {
-      if (
-        this.password.length > 8 &&
-        (this.password.match(/[A-Z]+/) && this.password.match(/[0-9]+/))
-      ) {
+      if (this.password.length > 8 && ( (this.password.match(/[A-Z]+/)) && (this.password.match(/[0-9]+/)) ) ) {
         return 4;
-      } else if (
-        this.password.length > 5 &&
-        (this.password.match(/[A-Z]+/) || this.password.match(/[0-9]+/))
-      ) {
+      } else if ( (this.password.length > 5) && ( (this.password.match(/[A-Z]+/)) || (this.password.match(/[0-9]+/)) ) ) {
         return 3;
       } else if (this.password.length > 3) {
         return 2;
@@ -65,14 +45,10 @@ export default {
       return 1;
     },
 
-    isEmailValid() {
-      if (this.type == "email") {
-        this.email = this.password;
-        this.email == "" ? "" : this.reg.test(this.email)
-          ? (this.labelClass = "success-color") & (this.inputClass = "success-input")
-          : (this.labelClass = "warning-color") & (this.inputClass = "warning-input");
-      }
-    }
+    submitData(){
+      this.$emit('changed', this.password);
+    },
+
   },
 
   methods: {
@@ -90,7 +66,17 @@ export default {
     blured() {
       this.labelClass = "passive-color";
       this.inputClass = "passive-input";
-    }
+    },
+
+    inputKey() {
+      if((this.type == "email") ){
+        this.email = this.password;
+        (this.email == "")? "" : (this.reg.test(this.email))
+        ? ((this.labelClass = "success-color") & (this.inputClass = "success-input"))
+        : ((this.labelClass = "warning-color") & (this.inputClass = "warning-input"));
+        }
+    },
+
   }
 };
 </script>
@@ -126,7 +112,7 @@ img {
   right: 0px;
   top: 0px;
   margin-right: 10px;
-  cursor: pointer;
+  cursor:pointer;
 }
 
 .input {
@@ -147,8 +133,9 @@ img {
 
 .success-input {
   box-shadow: 0 2px 0 0 green;
-}
-.warning-input {
+
+
+}.warning-input {
   box-shadow: 0 2px 0 0 red;
 }
 
@@ -160,11 +147,11 @@ img {
   color: #4a90e2;
 }
 
-.success-color {
+.success-color{
   color: green;
 }
 
-.warning-color {
+.warning-color{
   color: red;
 }
 
